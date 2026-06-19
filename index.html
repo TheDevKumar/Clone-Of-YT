@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YouTube Clone</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+
+</head>
+<body>
+<!-- 
+
+  <div class="upload-contain">
+    <h1 id="uploadh1">Upload...</h1>
+    <div class="upload-main">
+      <h1 id="h1ofsignup"></h1>
+      <div class="upload-form">
+        <input class="uploadinp" type="url" placeholder="Link Of Pic">
+        <input class="uploadinp" type="text" placeholder="Title Of Video" required>
+        <input class="uploadinp" type="text" placeholder="Description of Video" required>
+         <select class="uploadinp" name="" id="notify-upload" required>
+                  <option value="yes">Send Notication</option>
+                  <option value="no">Nothing</option>
+                </select>
+                  <input class="uploadinp" type="submit" name="" id="upload-sumbit">
+                  <img src="" alt="">
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="signup">
+        <div class="signup-main">
+          <h1 id="h1ofsignup">Sign Up</h1>
+            <form action="">
+                <input class="Sign-input" type="text" placeholder="Name" required>
+                <input  class="Sign-input"  type="text" placeholder="Email" required>
+                <input  class="Sign-input"  type="url" placeholder="Profile Pic" required>
+                <select  class="Sign-input"  name="" id="selectt" required>
+                  <option value="Creator">Creator</option>
+                  <option value="Viewer">Viewer</option>
+                </select>
+                <input type="submit" id="signup-sumbit">
+            </form>
+        </div>
+    </div> -->
+
+
+    <!-- SIGN UP MODAL (YOUTUBE AUTH STYLE) -->
+  <div class="signup">
+    <div class="signup-main">
+      <div class="modal-header">
+        <div class="yt-brand">
+          <!-- <div class="logo-icon"><svg viewBox="0 0 18 18" fill="none"><polygon points="6,3 15,9 6,15" fill="white"/></svg></div> -->
+          <span class="logo-text">YouTube</span>
+        </div>
+        <button class="modal-close-btn" type="button" onclick="document.querySelector('.signup').style.display='none'"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">Sign in</h2>
+        <p class="modal-subtitle">to continue to YouTube Creator Studio</p>
+        <form action="">
+          <div class="yt-input-group">
+            <input class="Sign-input" type="text" required placeholder=" ">
+            <label>Name</label>
+          </div>
+          <div class="yt-input-group">
+            <input class="Sign-input" type="email" required placeholder=" ">
+            <label>Email address</label>
+          </div>
+          <div class="yt-input-group">
+            <input class="Sign-input" type="url" required placeholder=" ">
+            <label>Profile Picture URL</label>
+          </div>
+          <div class="yt-input-group">
+            <select class="Sign-input" id="selectt" required>
+              <option value="" disabled selected hidden></option>
+              <option value="Creator">Creator Account</option>
+              <option value="Viewer">Viewer (Default)</option>
+            </select>
+            <label>Choose Role</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="text-link-btn" onclick="document.querySelector('.signup').style.display='none'">Create account</button>
+            <input type="submit" id="signup-sumbit" value="Next">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPLOAD VIDEO MODAL (YOUTUBE STUDIO STYLE) -->
+  <div class="upload-contain">
+    <div class="upload-main">
+      <div class="modal-header">
+        <h3 class="studio-title">Upload video</h3>
+        <button class="modal-close-btn" type="button" onclick="document.querySelector('.upload-contain').style.display='none'"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body studio-body">
+        <form class="upload-form" onsubmit="event.preventDefault();">
+          
+         
+          
+          
+          <div class="yt-input-group">
+            <input class="uploadinp" type="url" required placeholder=" ">
+            <label>Video Thumbnail URL</label>
+          </div>
+          <div class="yt-input-group">
+            <input class="uploadinp" type="text" required placeholder=" ">
+            <label>Title (required)</label>
+          </div>
+          <div class="yt-input-group">
+            <textarea class="uploadinp textarea-inp" required placeholder=" " rows="4"></textarea>
+            <label>Description</label>
+          </div>
+<div class="yt-input-group">
+  <input class="uploadinp" type="url" required placeholder=" ">
+  <label>YouTube Video URL (Link)</label> 
+</div>
+           <!-- <input class="uploadinp" type="file" accept="video/*" required> -->
+          <div class="yt-input-group">
+            <select class="uploadinp" id="notify-upload" required>
+              <option value="yes">Notify subscribers</option>
+              <option value="no">Don't notify</option>
+            </select>
+            <label>Audience Notification</label>
+          </div>
+          <div class="studio-footer">
+            <span class="studio-meta-text"><i class="ti ti-info-circle"></i> Baseline checks will run automatically.</span>
+            <input type="submit" id="upload-sumbit" value="Publish">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+ <div class="video-container">
+  <div class="video-main-content">
+    
+  <div class="video-player-box">
+<iframe id="fullscreenimg" width="100%" height="400" src="" frameborder="0" allowfullscreen></iframe>
+  <img src="" id="fullscreenimg" style="display: none;"> </div>
+
+    <h1 class="video-active-title">Top 10 JavaScript Tips Every Developer Should Know in 2026</h1>
+    
+    <div class="video-action-bar">
+      <div class="channel-details">
+        <div id="screen-avatar" class="ch-avatar" style="background-image: url(https://www.mamp.one/wp-content/uploads/2024/09/image-resources2.jpg);"></div>
+        <div class="channel-text">
+          <p class="vch-name">TechWithTim <i class="ti ti-circle-check-filled"></i></p>
+          <p class="vsubs">4.8M subscribers</p>
+        </div>
+        <button class="sub-btn">Subscribe</button>
+      </div>
+      
+      <div class="video-buttons">
+        <button class="action-btn"><i class="ti ti-thumb-up"></i> 124K</button>
+        <button class="action-btn"><i class="ti ti-thumb-down"></i></button>
+        <button class="action-btn"><i class="ti ti-share"></i> Share</button>
+        <button class="action-btn"><i class="ti ti-download"></i> Download</button>
+      </div>
+    </div>
+
+    <div class="video-description-box">
+      <p class="desc-meta">1.2M views &bull; 3 days ago</p>
+      <p class="desc-text">
+        In this video, we cover 10 essential JavaScript tips that will boost your productivity and clean up your code structure. Make sure to subscribe for more updates!
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <button class="hamburger" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+    <a class="logo" href="#">
+      <div class="logo-icon">
+        <svg viewBox="0 0 18 18" fill="none">
+          <polygon points="6,3 15,9 6,15" fill="white"/>
+        </svg>
+      </div>
+      <span class="logo-text">Youtube</span></a>
+      <span id="Cancel" class="logo-country"></span>
+
+     
+    
+  </div>
+
+  <div class="nav-center">
+     
+    <div class="search-wrap">
+<button id="cancelresp" class="mic-btn" aria-label="Search with voice"> <i class="ri-close-line"></i></button>
+
+      <input id="searchInput" type="text" placeholder="Search" aria-label="Search"/>
+      <button id="nonresp-search" class="search-btn" aria-label="Search"><i class="ti ti-search"></i></button>
+     
+
+    </div>
+    <button class="mic-btn" aria-label="Search with voice"><i class="ti ti-microphone"></i></button>
+     <button id="resp-search" class="search-btn" aria-label="Search"><i class="ri-search-line"></i></button>
+  </div>
+
+  <div class="nav-right">
+    <button class="upload-btn" aria-label="Upload video">
+      <i class="ti ti-upload" aria-hidden="true"></i> Upload
+    </button>
+    <button class="nav-icon-btn" aria-label="Notifications">
+      <i class="ti ti-bell"></i>
+      <span class="notif-dot"></span>
+    </button>
+    <button class="signin-btn" aria-label="Sign in">
+      <i class="ti ti-user-circle" style="font-size:18px;"></i> Sign in
+    </button>
+    <button class="avatar-btn" aria-label="Profile">
+    <img id="img-avatar" src="https://www.mamp.one/wp-content/uploads/2024/09/image-resources2.jpg" alt="">
+    </button>
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" aria-label="Navigation">
+    <div class="sidebar-section">
+      <a class="sidebar-item active" href="#">
+        <i class="ti ti-home" aria-hidden="true"></i> Home
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-brand-youtube" aria-hidden="true"></i> Shorts
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-player-play" aria-hidden="true"></i> Subscriptions
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-user-circle" aria-hidden="true"></i> You
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-clock" aria-hidden="true"></i> Watch later
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-thumb-up" aria-hidden="true"></i> Liked videos
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-label">Subscriptions</p>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-device-gamepad" aria-hidden="true"></i> GameZone PK
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-brand-python" aria-hidden="true"></i> Programming w/ Mosh
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-sparkles" aria-hidden="true"></i> AI Explained
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-camera" aria-hidden="true"></i> Visual Pakistan
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-label">Explore</p>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-flame" aria-hidden="true"></i> Trending
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-music" aria-hidden="true"></i> Music
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-trophy" aria-hidden="true"></i> Sports
+      </a>
+      <a class="sidebar-item" href="#">
+        <i class="ti ti-news" aria-hidden="true"></i> News
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- CATEGORY CHIPS -->
+    <!-- <div class="chips" role="list" aria-label="Filter categories">
+      <button class="chip active" role="listitem">All</button>
+      <button class="chip" role="listitem">Gaming</button>
+      <button class="chip" role="listitem">Coding</button>
+      <button class="chip" role="listitem">Music</button>
+      <button class="chip" role="listitem">AI & Tech</button>
+      <button class="chip" role="listitem">Vlogs</button>
+      <button class="chip" role="listitem">Education</button>
+      <button class="chip" role="listitem">Comedy</button>
+      <button class="chip" role="listitem">Cricket</button>
+      <button class="chip" role="listitem">Cooking</button>
+      <button class="chip" role="listitem">Travel</button>
+      <button class="chip" role="listitem">Finance</button>
+      <button class="chip" role="listitem">Anime</button>
+    </div> -->
+
+    <!-- VIDEO GRID -->
+    <div class="video-grid" aria-label="Video feed">
+
+        
+
+ 
+      <!-- Card 9 -->
+      <div class="vcard" role="article">
+        <div class="thumb">
+          <div class="thumb-bg" style="background:#0c1445; color:#818cf8;">
+            <i class="ti ti-chart-line"></i>
+          </div>
+          <div class="play-overlay"><i class="ti ti-player-play-filled"></i></div>
+          <span class="duration-badge">9:47</span>
+        </div>
+        <div class="vcard-body">
+          <div class="ch-avatar" style="background:#4338ca;">F</div>
+          <div class="vcard-info">
+            <p class="vtitle">How to Invest in Pakistan Stock Exchange — Beginner's Guide 2025</p>
+            <p class="vch-name">FinancePK</p>
+            <p class="vmeta">1.7M views &middot; 1 month ago</p>
+            <p class="vsubs">540K subscribers</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <footer>
+      <div class="main-footer">
+        <div class="footer-left-buttons">
+          <button class="location-reloader">
+          <i class="ri-home-4-line"></i>
+          </button>
+          <button>
+        <i class="ri-slideshow-4-line"></i>
+        </div>
+        <div  class="footer-create-button">
+         <button class="upload-btn" > <i class="ri-add-circle-line"></i>
+          </button>
+
+        </div>
+       <div class="footer-right-buttons">
+  <button>
+    <i class="ri-function-fill"></i>
+  </button>
+  
+  <button id="footer-avatar-btn" aria-label="Profile">
+    <i class="ri-account-box-2-line" id="footer-profile-icon"></i>
+    <img id="footer-img-avatar" src="" alt="Profile" style="display: none;" />
+  </button>
+</div>
+
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
+
+</html>
