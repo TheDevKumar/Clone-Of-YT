@@ -30,11 +30,12 @@
       height: var(--nav-h);
       background: var(--bg);
       border-bottom: 0.5px solid var(--border);
-      display: flex;
+      display: none;
       align-items: center;
       padding: 0 16px;
       gap: 8px;
       z-index: 100;
+
     }
 
     .nav-left {
@@ -329,10 +330,9 @@
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
       font-size: 42px;
-        background-size: cover;     
+        background-size: cover;      
   background-position: center;  
   background-repeat: no-repeat
-    
     }
     .thumb-bg i { opacity: 0.5; }
     .thumb:hover .play-overlay { opacity: 1; }
@@ -362,6 +362,7 @@
       display: flex;
       gap: 12px;
       padding: 12px 4px 4px;
+
     }
 
     .ch-avatar {
@@ -411,7 +412,6 @@
     ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
 
 
-
 .signup, .upload-contain {
   display: none;
   height: 100vh;
@@ -426,7 +426,7 @@
 }
 
 .signup-main, .upload-main {
-  background-color: #1f1f1f; 
+  background-color: #1f1f1f; /* Real YT Material Dark Surface */
   border: 1px solid rgba(255, 255, 255, 0.1);
   width: 450px;
   border-radius: 12px;
@@ -438,7 +438,7 @@
 }
 
 .upload-main {
-  width: 550px;
+  width: 550px; 
 }
 
 .modal-header {
@@ -657,7 +657,7 @@
 .video-player-box {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; 
+  padding-top: 56.25%;
   background-color: #000;
   border-radius: 12px;
   overflow: hidden;
@@ -795,12 +795,14 @@ footer {
 }
 
 .main-footer {
-  display: flex;
+  display: none;
   justify-content: space-around;
   align-items: center;
   max-width: 600px;
   margin: 0 auto;
   padding: 0 10px;
+  animation-name: ytModalFadeUp;
+  animation-duration: 1s;
 }
 .footer-left-buttons,
 .footer-right-buttons {
@@ -940,3 +942,47 @@ body {
 
   
 }
+
+
+.starting-animation-yt{
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg);;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+
+}
+
+
+.collector-ani{
+  display: flex;
+
+}
+.progress-bar{
+  margin-top: 25.2px;
+  height: 5px;
+  width: 300px;
+  background-color: crimson;
+  animation-name: progresss;
+  animation-duration: 4s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+
+}
+
+
+
+@keyframes progresss {
+  0%{
+    width: 1px;
+  }
+  100%{
+    width: 300px;
+  }
+  
+}
+
+
