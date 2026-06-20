@@ -311,6 +311,7 @@
     }
 
     .vcard {
+      display: none;
       cursor: pointer;
       border-radius: 12px;
       overflow: hidden;
