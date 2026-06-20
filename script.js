@@ -1,4 +1,3 @@
-
 let form = document.querySelector("form");
 let signup = document.querySelector(".signup");
 
@@ -39,11 +38,9 @@ let logoyoutube = document.querySelector(".logo")
 
 let startinganimation = document.querySelector(".starting-animation-yt")
 let navbar = document.querySelector(".navbar")
+let likes = document.querySelector("#likes")
 
-
-
-
-
+let currentVideoId = null;
 
 reloaderhome.addEventListener("click" , function(){
     location.reload();
@@ -54,32 +51,54 @@ logoyoutube.addEventListener("click" ,function(){
 })
 
 respsearch.addEventListener("click" , function(){
-    
     navleft.style.display = "none";
     cancelresp.style.display = "initial"
     searchInput.style.display = "initial"
     Cancelicon.style.display = "initial"
     searchInput.focus();
-    
-
-
 })
 
 cancelresp.addEventListener("click" , function(){
-     navleft.style.display = "initial";
+    navleft.style.display = "initial";
     cancelresp.style.display = "none"
     searchInput.style.display = "none"
     Cancelicon.style.display = "none"
-    
 })
 
-searchInput.addEventListener("input", () => {
+
+likes.addEventListener("click", function(){
+    if (currentVideoId === null) return;
+
+    videosArray = videosArray.map(video => {
+        if (Number(video.id) === currentVideoId) {
+            video.like = (video.like || 0) + 1;
+            
+            likes.innerHTML = `<i class="ti ti-thumb-up"></i> ${video.like}`;
+        }
+        return video;
+    });
+
+    localStorage.setItem("uploadedVideos", JSON.stringify(videosArray));
+});
+
+
+function debounce(func, timeout = 300){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
+const debouncedSearch = debounce(() => {
     let value = searchInput.value.toLowerCase();
     document.querySelectorAll(".vcard").forEach(card => {
         let title = card.querySelector(".vtitle").textContent.toLowerCase();
         card.style.display = title.includes(value) ? "block" : "none";
     });
-});
+}, 300);
+
+searchInput.addEventListener("input", debouncedSearch);
 
 window.addEventListener("DOMContentLoaded", () => {
     videosArray.forEach(videoData => {
@@ -91,33 +110,30 @@ window.addEventListener("DOMContentLoaded", () => {
         applyLoginState(currentAccount);
     }
 
-   setTimeout(() => {
-    startinganimation.style.display = "none";
-    navbar.style.display = "flex";
-    mainfooter.style.display = "flex";
-}, 2500);
-
-    
-   
+    setTimeout(() => {
+        startinganimation.style.display = "none";
+        navbar.style.display = "flex";
+        mainfooter.style.display = "flex";
+        document.querySelectorAll(".vcard").forEach(card => {
+            card.style.display = "initial"
+            });
+        
+    }, 2500);
 });
 
 hamburger.addEventListener("click", function() {
     sidebar.classList.toggle("sidebar-hidden");
 });
 
-
 signinbtn.addEventListener("click" , function(){
     signup.style.display = "flex";
 });
 
-
 function getEmbedUrl(url) {
     if (!url) return "";
-   
     if (url.includes("youtube.com/watch?v=")) {
         return url.replace("watch?v=", "embed/");
     }
- 
     if (url.includes("youtu.be/")) {
         let id = url.split("/").pop();
         return `https://www.youtube.com/embed/${id}`;
@@ -127,34 +143,64 @@ function getEmbedUrl(url) {
 
 videoGrid.addEventListener("click", function(event) {
     let card = event.target.closest(".vcard");
-     fullscreenimg.focus();
-    if (card) {
-        videocontainer.style.display = "flex";
-        
-        let vidtext = card.querySelector(".vtitle").textContent;
-        let chnlname = card.querySelector(".vch-name").textContent;
-        
-        videotext.textContent = vidtext;
-        vchname.innerHTML = `${chnlname} <i class="ti ti-circle-check-filled"></i>`;
-        desctext.textContent = card.dataset.description || "No description available.";
-        
-        let rawVideoUrl = card.dataset.videoUrl;
-        if (rawVideoUrl) {
-            fullscreenimg.src = getEmbedUrl(rawVideoUrl);
-        } else {
-            
-            fullscreenimg.src = "https://www.youtube.com/embed/dQw4w9WgXcQ"; 
-        }
+    if (!card) return;
 
-        let avatarrrr = card.querySelector(".ch-avatar");
+    fullscreenimg.focus();
+    videocontainer.style.display = "flex";
+    
+    let cardId = Number(card.dataset.id); 
+    currentVideoId = cardId; 
+
+    let activeVideoData = null;
+
+    videosArray = videosArray.map(video => {
+        if (Number(video.id) === cardId) {
+            video.views = (video.views || 0) + 1; 
+            activeVideoData = video; 
+
+            let viewSpan = card.querySelector(".view-count");
+            if(viewSpan) viewSpan.textContent = video.views;
+             document.querySelector(".desc-meta").innerHTML = `${video.views} Views &middot; 1 min ago ` 
+        }
+        return video;
+    });
+
+    localStorage.setItem("uploadedVideos", JSON.stringify(videosArray));
+
+    let vidtext = card.querySelector(".vtitle").textContent;
+    let chnlname = card.querySelector(".vch-name").textContent;
+    
+    videotext.textContent = vidtext;
+    vchname.innerHTML = `${chnlname} <i class="ti ti-circle-check-filled"></i>`;
+    desctext.textContent = card.dataset.description || "No description available.";
+    
+    if (activeVideoData) {
+        let totalLikes = activeVideoData.like || 0;
+        likes.innerHTML = `<i class="ti ti-thumb-up"></i> ${totalLikes}`;
+    } else {
+        likes.innerHTML = `<i class="ti ti-thumb-up"></i> 0`;
+    }
+
+    let rawVideoUrl = card.dataset.videoUrl;
+    if (rawVideoUrl) {
+        fullscreenimg.src = getEmbedUrl(rawVideoUrl);
+    } else {
+        fullscreenimg.src = "https://www.youtube.com/embed/dQw4w9WgXcQ"; 
+    }
+
+    let avatarrrr = card.querySelector(".ch-avatar");
+    if (avatarrrr) {
         let thumbava = avatarrrr.style.backgroundImage;
         if(thumbava) {
             let cleanavatar = thumbava.slice(4, -1).replace(/[\"\\]/g, "");
             avatarofscreen.style.backgroundImage = `url("${cleanavatar}")`;
-           
         }
     }
 });
+
+
+
+
 uploadbtn.forEach(uploadorg => {
     uploadorg.addEventListener("click" , function(){
         uploadcontain.style.display = "flex";
@@ -162,27 +208,25 @@ uploadbtn.forEach(uploadorg => {
 });
 
 uploadsumbit.addEventListener("click" , function(){
-    
-    
     let currentAccount = { idname: "Anonymous", pfps: "" }; 
     if (AccountInfo.length > 0) {
         currentAccount = AccountInfo[AccountInfo.length - 1]; 
     }
 
     const videoData = {
-        thumbnail: inputsupload[0].value || "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1200", // Fallback thumbnail agar khali ho
+        id: Date.now(), 
+        thumbnail: inputsupload[0].value || "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=1200", 
         title: inputsupload[1].value || "Untitled Video",
         description: inputsupload[2].value || "No description provided.", 
         videoUrl: inputsupload[3] ? inputsupload[3].value : "", 
-        
-        
         channelName: currentAccount.idname,
-        channelAvatar: currentAccount.pfps
+        channelAvatar: currentAccount.pfps,
+        views: 0 ,
+        like: 0
     };
 
     createCardDOM(videoData);
 
-    
     videosArray.push(videoData);
     localStorage.setItem("uploadedVideos", JSON.stringify(videosArray));
 
@@ -198,8 +242,9 @@ function createCardDOM(data) {
     vcard.className = 'vcard';
     vcard.setAttribute('role', 'article');
     
+    vcard.dataset.id = data.id; 
     vcard.dataset.description = data.description;
-    vcard.dataset.videoUrl = data.videoUrl; 
+    vcard.dataset.videoUrl = data.videoUrl;
 
     const thumb = document.createElement('div');
     thumb.className = 'thumb';
@@ -242,8 +287,8 @@ function createCardDOM(data) {
 
     const vmeta = document.createElement('p');
     vmeta.className = 'vmeta';
-    vmeta.innerHTML = '0 Views &middot; 2 mins ago';
-
+    vmeta.innerHTML = `<span class="view-count">${data.views || 0}</span> views &middot; Just now`;
+    
     const vsubs = document.createElement('p');
     vsubs.className = 'vsubs';
     vsubs.textContent = '1.2M subscribers';
@@ -261,7 +306,6 @@ function createCardDOM(data) {
 
     videoGrid.appendChild(vcard);
 }
-
 
 form.addEventListener("submit" , function(evt){
     evt.preventDefault();
@@ -281,13 +325,12 @@ form.addEventListener("submit" , function(evt){
     if(signinp[1]) signinp[1].value = "";
     signinp[2].value = "";
 }); 
+
 function applyLoginState(acc) {
     if (!acc) return;
 
     if (acc.pfps) {
         imgavatar.src = acc.pfps;
-        
-      
         if (footerImgAvatar && footerAvatarBtn) {
             footerImgAvatar.src = acc.pfps;
             footerAvatarBtn.classList.add("has-image"); 
