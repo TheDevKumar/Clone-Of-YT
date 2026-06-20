@@ -29,12 +29,19 @@ let desctext = document.querySelector(".desc-text");
 
 let videosArray = JSON.parse(localStorage.getItem("uploadedVideos")) || [];
 let searchInput = document.querySelector("#searchInput");
+let mainfooter = document.querySelector(".main-footer") 
 
 let AccountInfo = JSON.parse(localStorage.getItem("Accounts")) || [];
 let footerImgAvatar = document.querySelector("#footer-img-avatar");
 let footerAvatarBtn = document.querySelector("#footer-avatar-btn");
 let reloaderhome = document.querySelector(".location-reloader")
 let logoyoutube = document.querySelector(".logo")
+
+let startinganimation = document.querySelector(".starting-animation-yt")
+let navbar = document.querySelector(".navbar")
+
+
+
 
 
 
@@ -83,6 +90,15 @@ window.addEventListener("DOMContentLoaded", () => {
         let currentAccount = AccountInfo[AccountInfo.length - 1]; 
         applyLoginState(currentAccount);
     }
+
+   setTimeout(() => {
+    startinganimation.style.display = "none";
+    navbar.style.display = "flex";
+    mainfooter.style.display = "flex";
+}, 2500);
+
+    
+   
 });
 
 hamburger.addEventListener("click", function() {
