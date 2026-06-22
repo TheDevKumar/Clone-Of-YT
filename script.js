@@ -1,6 +1,5 @@
 let form = document.querySelector("form");
 let signup = document.querySelector(".signup");
-
 let selectsign = document.querySelector("#selectt");
 let uploadbtn = document.querySelectorAll(".upload-btn");
 let uploadcontain = document.querySelector(".upload-contain");
@@ -40,6 +39,11 @@ let startinganimation = document.querySelector(".starting-animation-yt")
 let navbar = document.querySelector(".navbar")
 let likes = document.querySelector("#likes")
 
+
+let subBtn = document.querySelector(".sub-btn");
+let vSubsText = document.querySelector(".channel-text .vsubs"); 
+
+
 let currentVideoId = null;
 
 reloaderhome.addEventListener("click" , function(){
@@ -56,6 +60,7 @@ respsearch.addEventListener("click" , function(){
     searchInput.style.display = "initial"
     Cancelicon.style.display = "initial"
     searchInput.focus();
+    signinbtn.style.display = "none"
 })
 
 cancelresp.addEventListener("click" , function(){
@@ -63,6 +68,7 @@ cancelresp.addEventListener("click" , function(){
     cancelresp.style.display = "none"
     searchInput.style.display = "none"
     Cancelicon.style.display = "none"
+    signinbtn.style.display = "flex"
 })
 
 
@@ -145,6 +151,10 @@ videoGrid.addEventListener("click", function(event) {
     let card = event.target.closest(".vcard");
     if (!card) return;
 
+        setTimeout(() => {
+        let currentChannel = vchname.textContent.trim();
+        updateSubscribeButtonDOM(currentChannel);
+    }, 50);
     fullscreenimg.focus();
     videocontainer.style.display = "flex";
     
@@ -203,8 +213,10 @@ videoGrid.addEventListener("click", function(event) {
 
 uploadbtn.forEach(uploadorg => {
     uploadorg.addEventListener("click" , function(){
+
+        if(signup.style.display === "none"){
         uploadcontain.style.display = "flex";
-    });
+    }});
 });
 
 uploadsumbit.addEventListener("click" , function(){
@@ -351,5 +363,36 @@ function applyLoginState(acc) {
         uploadbtn.forEach(btn => btn.style.display = "none");
     } else if (acc.role === "Creator") {
         uploadbtn.forEach(btn => btn.style.display = "flex");
+    }
+}
+
+
+let subscriptions = JSON.parse(localStorage.getItem("channelSubscriptions")) || {};
+
+
+subBtn.addEventListener("click", function() {
+    let currentChannel = vchname.textContent.trim();
+    if (!currentChannel) return;
+
+    if (!subscriptions[currentChannel]) {
+        subscriptions[currentChannel] = true;
+    } else {
+        delete subscriptions[currentChannel];
+    }
+
+    localStorage.setItem("channelSubscriptions", JSON.stringify(subscriptions));
+    
+    updateSubscribeButtonDOM(currentChannel);
+});
+
+function updateSubscribeButtonDOM(channelName) {
+    if (subscriptions[channelName]) {
+        subBtn.textContent = "Subscribed";
+        subBtn.style.backgroundColor = "#303030"; 
+        subBtn.style.color = "#aaaaaa";
+    } else {
+        subBtn.textContent = "Subscribe";
+        subBtn.style.backgroundColor = "#ffffff"; 
+        subBtn.style.color = "#0f0f0f";
     }
 }
